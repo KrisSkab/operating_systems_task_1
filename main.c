@@ -30,7 +30,7 @@ int programLength;
 
 // VM registries
 char vm_R [4];
-int  vm_IC;
+int  vm_IC = 0;
 bool vm_C;
 
 // RM registries
