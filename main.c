@@ -417,89 +417,6 @@ void commandPD(int x1)
                 rmMemory[findRealAddress(x1, i)][2], rmMemory[findRealAddress(x1, i)][3]);
   	}
 }
-/**
- * SORT OF WORKING.
- */
-void detectCommand()
-{
-	char command[4];
-
-	while ( (command[0] != 'H' || command[1] != 'A' || command[2] != 'L' || command[3] != 'T') )
-	{
-		for (i = 0; i < MEMORY_ARRAY_WIDTH; ++i)
-		{
-			// send the line index
-			command[i] = rmMemory[findRealAddress(vm_IC / 10, vm_IC % 10)][i];
-		}
-		if (command[0] == '-' && command[1] == '-')
-		{
-			vm_IC = vm_IC / 10 * 10;
-			vm_IC += 10;
-		}
-		else
-		{
-			printf("Command: %c%c%c%c\n", command[0], command[1], command[2], command[3]);
-
-			++vm_IC;
-
-			switch(command[0])
-			{
-				case 'P':
-					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("PD command detected.\n");
-						commandPD(command[2] - '0');
-					}
-					break;
-				case 'A':
-					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("AD command detected.\n");
-						commandAD(command[2], command[3]);
-					}
-					break;
-				case 'L':
-					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("LR command detected.\n");
-					}
-					break;
-				case 'S':
-					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("SR command detected.\n");
-					}
-					break;
-				case 'C':
-					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("CR command detected.\n");
-					}
-					break;
-				case 'B':
-					if (command[1] == 't' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("BT command detected.\n");
-					}
-					break;
-				case 'G':
-					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
-					{
-						printf("GD command detected.\n");
-					}
-					break;
-				default:
-					if (!isdigit(command[0]) && !isdigit(command[1]) && !isdigit(command[2]) && !isdigit(command[3]))
-					{
-						printf("Output string detected.\n");
-					}
-					break;
-			}// end switch
-		}// end else
-	}// end while 
-	printf("Program work done. HALT detected!\n");
-}// end detectCommand()
-/*----------------------------------------------------------------------------------------------------*/
 
 void commandAD(char x1, char x2)
 {
@@ -550,7 +467,6 @@ void commandBT(char x1, char x2)
 	}
 }
 
-
 void commandGD(char x1)
 {
 	int sk;
@@ -564,6 +480,93 @@ void commandGD(char x1)
 		rmMemory[findRealAddress(x1, x2)][0] = sk / 1000 % 10 + '0';
 	}
 }
+/**
+ * SORT OF WORKING.
+ */
+void detectCommand()
+{
+	char command[4];
+
+	while ( (command[0] != 'H' || command[1] != 'A' || command[2] != 'L' || command[3] != 'T') )
+	{
+		for (i = 0; i < MEMORY_ARRAY_WIDTH; ++i)
+		{
+			// send the line index
+			command[i] = rmMemory[findRealAddress(vm_IC / 10, vm_IC % 10)][i];
+		}
+		if (command[0] == '-' && command[1] == '-')
+		{
+			vm_IC = vm_IC / 10 * 10;
+			vm_IC += 10;
+		}
+		else
+		{
+			printf("Command: %c%c%c%c\n", command[0], command[1], command[2], command[3]);
+
+			++vm_IC;
+
+			switch(command[0])
+			{
+				case 'P':
+					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("PD command detected.\n");
+						commandPD(command[2] - '0');
+					}
+					break;
+				case 'A':
+					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("AD command detected.\n");
+						commandAD(command[2], command[3]);
+					}
+					break;
+				case 'L':
+					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("LR command detected.\n");
+						commandLR(command[2], command[3]);
+					}
+					break;
+				case 'S':
+					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("SR command detected.\n");
+						commandSR(command[2], command[3]);
+					}
+					break;
+				case 'C':
+					if (command[1] == 'R' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("CR command detected.\n");
+						commandCR(command[2], command[3]);
+					}
+					break;
+				case 'B':
+					if (command[1] == 't' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("BT command detected.\n");
+						commandBT(command[2], command[3]);
+					}
+					break;
+				case 'G':
+					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
+					{
+						printf("GD command detected.\n");
+					}
+					break;
+				default:
+					if (!isdigit(command[0]) && !isdigit(command[1]) && !isdigit(command[2]) && !isdigit(command[3]))
+					{
+						printf("Output string detected.\n");
+					}
+					break;
+			}// end switch
+		}// end else
+	}// end while 
+	printf("Program work done. HALT detected!\n");
+}// end detectCommand()
+/*----------------------------------------------------------------------------------------------------*/
 
 void commandHALT()
 {
