@@ -522,7 +522,7 @@ void detectCommand()
 					}
 					break;
 				case 'B':
-					if (command[1] == 't' && isdigit(command[2]) && isdigit(command[3]))
+					if (command[1] == 'T' && isdigit(command[2]) && isdigit(command[3]))
 					{
 						printf("BT command detected.\n");
 					}
