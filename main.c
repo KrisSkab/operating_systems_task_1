@@ -232,7 +232,7 @@ int outputRealMachineMemoryToFile(char* fileName)
 		fprintf(outputFile, "\n");
 	}
 	fclose(outputFile);
-	
+
 	return 0;
 }
 /**
@@ -248,13 +248,13 @@ int readProgramFile()
 	FILE *programFile = NULL;
 	char buffer;
 	j = 0, k = 0;
-	
+
 	while (asking == 1)
 	{
 		char programFileName[20];
 		printf("\nProvide the name of your program file to be run (upto 20 symbols): ");
 		scanf("%s", programFileName);
-		
+
 		programFile = fopen(programFileName, "r+");
 
 		if (programFile == NULL)
@@ -287,7 +287,7 @@ int readProgramFile()
 	}
 	fclose(programFile);
 	programLength = k;
-	
+
 	if (rmSupervisorMemory  [0][0] == '$' && 
 		rmSupervisorMemory  [0][1] == 'B' &&
 		rmSupervisorMemory  [0][2] == 'E' &&
@@ -304,7 +304,7 @@ int readProgramFile()
 	{
 		return -1;
 	}
-	
+
 }
 /**
  * Displays the contents of the current registries state 
@@ -455,6 +455,7 @@ void detectCommand()
 					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
 					{
 						printf("AD command detected.\n");
+						commandAD(command[2], command[3]);
 					}
 					break;
 				case 'L':
@@ -575,12 +576,12 @@ int main()
 	printf("* Welcome to Real Machine (RM) and Virtual Machine (VM) project!\n");
 	printf("* This is a program which simulates VM work on top of RM.\n");
 	printf("/***************************************************************/\n");
-	
+
 	printf("System Information:\n");
 
 	initiliazeMemory();
 	initializePageTable();
-	
+
 	if (readProgramFile() == 0)
 	{
 		printf("\nProgram file loading into supervisor memory was successful!\n");
@@ -601,7 +602,7 @@ int main()
 	}
 	showRegistryStatus();
 	detectCommand();
-	
+
 	if (outputRealMachineMemoryToFile(OUTPUT_FILE_NAME) == 0)
 	{
 		printf("Real machine memory was succesfully outputted to file!\n");
@@ -611,7 +612,7 @@ int main()
 		printf("There was a problem outputing the RM memory to file!\n");
 		return -1;
 	}
-	
+
 	//getchar();
 	return 0;
 }
