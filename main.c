@@ -553,6 +553,7 @@ void detectCommand()
 					if (command[1] == 'D' && isdigit(command[2]) && isdigit(command[3]))
 					{
 						printf("GD command detected.\n");
+						commandGD(command[2]);
 					}
 					break;
 				default:
